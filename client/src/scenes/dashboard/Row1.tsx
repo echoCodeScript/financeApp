@@ -49,6 +49,7 @@ const Row1 = () => {
       })
     );
   }, [data]);
+  console.log("data is",data);
   const revenueProfit = useMemo(() => {
     return (
       data &&

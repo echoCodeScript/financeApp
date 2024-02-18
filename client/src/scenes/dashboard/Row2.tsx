@@ -7,9 +7,11 @@ import {
   LineChart,
   XAxis,
   YAxis,
+  ZAxis,
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { ScatterChart, Scatter } from "recharts";
 import { Box, Typography, useTheme } from "@mui/material";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 import FlexBetween from "@/components/FlexBetween";
@@ -27,18 +29,30 @@ const Row2 = () => {
     return (
       operationalData &&
       operationalData[0].monthlyData.map(
-        ({ month, expenses, operationalExpenses }) => {
+        ({ month, operationalExpenses,nonOperationalExpenses }) => {
           return {
             name: month.substring(0, 3),
             "Operational Expenses": operationalExpenses,
-            "Non Operational Expenses": (
-              expenses - operationalExpenses
-            ).toFixed(2),
+            "Non Operational Expenses": nonOperationalExpenses,
           };
         }
       )
     );
   }, [operationalData]);
+  console.log("operational Data is", operationalData);
+  console.log("productData is ",productData);
+  const productExpenseData = useMemo(() => {
+    return (
+      productData &&
+      productData.map(({ _id, price, expense }) => {
+        return {
+          id: _id,
+          price: price,
+          expense:expense
+        };
+      })
+    );
+  }, [productData]);
   console.log(operationalData);
   return (
     <>
@@ -126,7 +140,6 @@ const Row2 = () => {
               83
             </Typography>
             <Typography variant="h6">
-            
               Finance Goals of the campaign that is desired
             </Typography>
           </Box>
@@ -139,7 +152,50 @@ const Row2 = () => {
           </Box>
         </FlexBetween>
       </DashboardBox>
-      <DashboardBox gridArea="f"></DashboardBox>
+      <DashboardBox gridArea="f">
+        <BoxHeader
+          title="Product Prices vs Expenses"
+          sideText="+4%"
+        ></BoxHeader>
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart
+            margin={{
+              top: 20,
+              right: 25,
+              bottom: 40,
+              left: 0,
+            }}
+          >
+            <CartesianGrid stroke={palette.grey[800]} />
+            <XAxis
+              type="number"
+              dataKey="price"
+              name=" price"
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "10px" }}
+              tickFormatter={(v) => `$${v}`}
+            />
+            <YAxis
+              type="number"
+              dataKey="expense"
+              name="expense"
+              axisLine={false}
+              tickLine={false}
+              style={{ fontSize: "10px" }}
+              tickFormatter={(v) => `$${v}`}
+            />
+            {/* for dot size setting */}
+            <ZAxis type="number" range={[20]}></ZAxis>
+            <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+            <Scatter
+              name="Product Expense Ratio"
+              data={productExpenseData}
+              fill={palette.tertiary[500]}
+            />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </DashboardBox>
     </>
   );
 };
