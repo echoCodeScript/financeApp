@@ -1,6 +1,6 @@
 // Import necessary functions from Redux Toolkit Query
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { GetKpisResponse } from "./types";
+import { GetKpisResponse,GetProductsResponse } from "./types";
 
 // Define an API slice named "api"
 export const api = createApi({
@@ -9,7 +9,7 @@ export const api = createApi({
   // Name the reducer slice in the Redux store
   reducerPath: "main",
   // Define a tag type for data freshness ("Kpis")
-  tagTypes: ["Kpis"],
+  tagTypes: ["Kpis","Products"],
   // Define API endpoints
   endpoints: (build) => ({
     // Endpoint to fetch Kpis data (GET /kpi/kpis/)
@@ -17,8 +17,12 @@ export const api = createApi({
       query: () => "kpi/kpis/",
       providesTags: ["Kpis"], // Updates data tagged with "Kpis"
     }),
+    getProducts: build.query<Array<GetProductsResponse>,void>({
+      query: () => "product/products/",
+      providesTags: ["Products"], // Updates data tagged with "Kpis"
+    }),
   }),
 });
 
 // Generate a React hook for the "getKpis" endpoint
-export const { useGetKpisQuery } = api;
+export const { useGetKpisQuery,useGetProductsQuery } = api;

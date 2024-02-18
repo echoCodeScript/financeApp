@@ -8,7 +8,9 @@ import dotenv from "dotenv"; // Import module for loading environment variables 
 import morgan from "morgan"; // Import middleware for logging HTTP requests
 import kpiRoutes from "./routes/kpi.js";
 import KPI from "./models/KPI.js";
-import { kpis } from "./data/data.js";
+import { kpis, products } from "./data/data.js";
+import productRoutes from "./routes/product.js";
+import Product from "./models/Product.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -34,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/kpi", kpiRoutes);
+app.use("/product", productRoutes);
 
 // mongoose setup
 const PORT = process.env.PORT;
@@ -45,5 +48,6 @@ mongoose
     //insert for the first time and comment it so that there will be no dupicacy,
     // await mongoose.connection.db.dropDatabase();
     // KPI.insertMany(kpis);
+    // Product.insertMany(products);
   })
   .catch((error) => console.log(`${error} did not connect`));
