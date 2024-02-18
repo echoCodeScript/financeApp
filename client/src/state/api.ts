@@ -1,5 +1,6 @@
 // Import necessary functions from Redux Toolkit Query
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { GetKpisResponse } from "./types";
 
 // Define an API slice named "api"
 export const api = createApi({
@@ -12,7 +13,7 @@ export const api = createApi({
   // Define API endpoints
   endpoints: (build) => ({
     // Endpoint to fetch Kpis data (GET /kpi/kpis/)
-    getKpis: build.query({
+    getKpis: build.query<Array<GetKpisResponse>,void>({
       query: () => "kpi/kpis/",
       providesTags: ["Kpis"], // Updates data tagged with "Kpis"
     }),

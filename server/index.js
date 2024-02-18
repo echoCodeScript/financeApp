@@ -8,7 +8,7 @@ import dotenv from "dotenv"; // Import module for loading environment variables 
 import morgan from "morgan"; // Import middleware for logging HTTP requests
 import kpiRoutes from "./routes/kpi.js";
 import KPI from "./models/KPI.js";
-import {kpis} from "./data/data.js"
+import { kpis } from "./data/data.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -33,9 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Enable CORS middleware to allow requests from different origins
 app.use(cors());
 
-
-
-app.use("/kpis", kpiRoutes);
+app.use("/kpi", kpiRoutes);
 
 // mongoose setup
 const PORT = process.env.PORT;
