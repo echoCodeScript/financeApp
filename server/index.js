@@ -50,8 +50,8 @@ mongoose
     //for testing and developing phase.
     //insert for the first time and comment it so that there will be no dupicacy,
   // await mongoose.connection.db.dropDatabase();
-    // KPI.insertMany(kpis);
-    // Product.insertMany(products);
-    // Transaction.insertMany(transactions);
+  //   KPI.insertMany(kpis);
+  //   Product.insertMany(products);
+  //   Transaction.insertMany(transactions);
   })
   .catch((error) => console.log(`${error} did not connect`));
